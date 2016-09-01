@@ -2,11 +2,11 @@
 
 ## Clone
 
-``bash
+```bash
 git clone git@github.com:aacidov/DisQwerty-browser.git
 cd DisQwerty-browser
 npm i
-``
+```
 
 ## Demo
 
