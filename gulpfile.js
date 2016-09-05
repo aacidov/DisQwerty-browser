@@ -6,7 +6,12 @@ var server = require('gulp-server-livereload');
 gulp.task('webserver', function() {
   gulp.src('.')
     .pipe(server({
-      livereload: true,
+      livereload: {
+        enable: true, // need this set to true to enable livereload
+        filter: function(filePath, cb) {
+          cb( !(/node_modules/.test(filePath)) && !(/\.git/.test(filePath)));
+        }
+      },
       directoryListing: true,
       open: true
     }));
