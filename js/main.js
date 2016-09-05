@@ -46,3 +46,9 @@ var settings = new Settings(document.getElementById('settings'), timer);
 var chooseButton = document.getElementById('keyboard');
 
 chooseButton.onclick = function () {timer.choose(); };
+
+document.addEventListener("keydown", function(event) {
+    if (event.which==32) {
+        timer.choose();
+    }
+})

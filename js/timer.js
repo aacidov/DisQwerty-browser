@@ -50,12 +50,16 @@ Timer.prototype.cicle = function () {
 Timer.prototype.choose = function () {
   if(!this.inRow){
     this.inRow=true;
-    this.curRow.classList.remove("selected");
+    if (typeof this.curRow.classList != 'undefined') {
+        this.curRow.classList.remove("selected");
+    }
     this.buttons = [].slice.apply( this.curRow.childNodes);
     return;
   }
   var choosen = document.getElementsByClassName('selected')[0];
-  choosen.classList.remove("selected");
+  if (typeof choosen != 'undefinded') {
+      choosen.classList.remove("selected");
+  }
   choosen.onchoose();
   this.onchoose();
   this.reset();
