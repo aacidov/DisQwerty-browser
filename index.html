@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/main.css" media="screen" title="no title" charset="utf-8">
     <title>DisQwerty</title>
-  </head>
-  <body>
-    <div class="font output"><span id="output" contenteditable="true"></span><span id="cursor"></span></div>
-    <table id="predictWords" class="font"></table>
-    <table id="keyboard" class="font"></table>
-    <table id="controls" class="font"></table>
-    <form class="settings" id="settings">
-      <b>Настройки:</b><br>
-      <b>Время переключения:</b> <input type="number" name="timeoutInput" value=""><br>
-      <input type="button" name="timeoutChangeButton" value="Поменять">
-      <input type="button" name="startButton" value="Старт">
-    </form>
-    <script type="text/javascript" src="build/bundle.js"></script>
-  </body>
+</head>
+<body>
+<div class="font output">
+    <span id="output" contenteditable="true"></span><span id="cursor"></span>
+</div>
+<table id="predictWords" class="font"></table>
+<div id="keyboard" class="font"></div>
+<table id="controls" class="font"></table>
+<script type="text/javascript" src="/dist/bundle.js"></script>
+</body>
 </html>
