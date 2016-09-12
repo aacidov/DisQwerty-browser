@@ -1,38 +1,39 @@
 body{
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 table{
-  cursor: pointer;
+    cursor: pointer;
 }
 td{
-  display: inline-grid;
-  text-align: center;
-  min-width: 97px;
+    display: inline-grid;
+    text-align: center;
+    border: 1px solid black;
+    min-width: 97px;
 
 }
 
 .output{
-  padding: 2px;
-  border: 1px solid black;
-  min-height: 69px;
+    padding: 2px;
+    border: 1px solid black;
+    min-height: 69px;
 }
 .font{
-  font-size: 60px;
-  width: 1024px;
+    font-size: 60px;
+    width: 1024px;
 }
 .button{
-  border: 1px solid black;
+    border: 1px solid black;
 }
 .selected{
-  background: #000;
-  color: #fff;
+    background: #000;
+    color: #fff;
 }
 .settings{
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 150px;
-  height: 150px;
-  border: 1px solid black;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
 }

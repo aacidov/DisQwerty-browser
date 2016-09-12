@@ -7,9 +7,10 @@ import App from './containers/App'
 
 export const routes = (
     <div>
-        <Route path='/' component={App}>
+        <Route path='/(:lang)' component={App}>
             <IndexRoute component={Keyboard}/>
         </Route>
+
         <Route path='*' component={NotFound}/>
     </div>
 );

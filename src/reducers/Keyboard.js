@@ -1,5 +1,5 @@
 import {
-    SET_VALUE
+    SET_NEXT_VALUE
 } from '../constants/Keyboard'
 
 const initialState = {
@@ -9,7 +9,8 @@ const initialState = {
 
 export default function Keyboard(state = initialState, action) {
     switch (action.type) {
-        case SET_VALUE:
+        case SET_NEXT_VALUE:
+            // console.log(action.payload)
             return { ...state };
         default:
             return state;
