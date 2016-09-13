@@ -16,6 +16,12 @@ export default class Keyboard extends Component {
         this.cellTimer = null;
         this.activeRow = 0;
         this.activeCell = -1;
+
+        let lang = props.params.lang || 'ru';
+        let {lang:{letters}} = require('../../../language/' + lang);
+
+        this.lang = lang;
+        this.letters = letters;
     }
 
     resetCell(){
@@ -51,7 +57,7 @@ export default class Keyboard extends Component {
     }
 
     componentDidMount(){
-        // this.startRowCircle();
+        this.startRowCircle();
     }
 
     switchOrSelect(){
@@ -63,25 +69,30 @@ export default class Keyboard extends Component {
         else if(this.cellTimer)
         {
             //находим выбранную букву и продолжаем
-            this.activeRow = 0;
+            let {addLetter} = this.props.KActions;
+            let lat = this.letters[this.activeRow][this.activeCell];
+            addLetter(lat);
+            this.activeRow--;
             this.startRowCircle();
         }
     }
 
     render() {
-        let lang = this.props.params.lang || 'ru';
-        let {lang:{letters}} = require('../../../language/' + lang);
-
         return (
-            <table onClick={::this.switchOrSelect}>
-                <KRow
-                    resetC={::this.resetCell}
-                    resetR={::this.resetRow}
-                    rows={letters}
-                    activeRow={this.props.row}
-                    activeCell={this.props.cell}
-                />
-            </table>
+            <div>
+                <div className='font output'>
+                    <span id='output'>{this.props.phrase}</span><span id='cursor'></span>
+                </div>
+                <table onClick={::this.switchOrSelect}>
+                    <KRow
+                        resetC={::this.resetCell}
+                        resetR={::this.resetRow}
+                        rows={this.letters}
+                        activeRow={this.props.row}
+                        activeCell={this.props.cell}
+                    />
+                </table>
+            </div>
         )
     }
 }
@@ -89,7 +100,8 @@ export default class Keyboard extends Component {
 function mapStateToProps(state) {
     return {
         row: state.Keyboard.row,
-        cell: state.Keyboard.cell
+        cell: state.Keyboard.cell,
+        phrase: state.Keyboard.phrase
     }
 }
 
