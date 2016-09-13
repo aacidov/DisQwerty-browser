@@ -17,7 +17,7 @@ export default class KRow extends Component {
             activeRow = 0;
         }
 
-        if(activeCell === rows[activeRow].length)
+        if(activeCell !== -1 && activeCell === rows[activeRow].length)
         {
             resetC();
             activeCell = 0;
@@ -26,9 +26,9 @@ export default class KRow extends Component {
         return (
             <tbody>
             {rows.map((set, i) =>
-                <tr className={activeRow == i ? 'selected' : null} key={i}>
+                <tr className={activeRow === i && activeCell === -1 ? 'selected' : null} key={i}>
                     {set.split('').map((l, j) =>
-                        <td className={activeCell == j ? 'selected' : null} key={j}>{l}</td>)
+                        <td className={activeCell === j && activeRow === i ? 'selected' : null} key={j}>{l}</td>)
                     }
                 </tr>
             )}

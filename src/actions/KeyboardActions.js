@@ -2,11 +2,11 @@ import {
     SET_NEXT_VALUE
 } from '../constants/Keyboard'
 
-export function setNextStep(r, k) {
+export function setNextRow(r, c) {
     return (dispatch) => {
         dispatch({
             type: SET_NEXT_VALUE,
-            payload: {r, k}
+            payload: {r, c}
         });
     }
 }
