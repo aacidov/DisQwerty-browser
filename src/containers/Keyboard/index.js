@@ -20,8 +20,11 @@ export default class Keyboard extends Component {
         let lang = props.params.lang || 'ru';
         let {lang:{letters}} = require('../../../language/' + lang);
 
+        letters = letters.map((l) => '^' + l);
+
         this.lang = lang;
         this.letters = letters;
+        this.interval = 1000;
     }
 
     resetCell(){
@@ -36,24 +39,33 @@ export default class Keyboard extends Component {
         let {setNextRow} = this.props.KActions;
         if(this.cellTimer)
         {
-            clearInterval(this.cellTimer);
-            this.cellTimer = 0;
+            this.resetTimers();
             this.activeCell = -1;
         }
 
         this.rowTimer = setInterval(() => {
             setNextRow(++this.activeRow, this.activeCell);
-        }, 1000);
+        }, this.interval);
     }
 
     startCellCircle(){
-        clearInterval(this.rowTimer);
-        this.rowTimer = 0;
-
+        this.resetTimers();
         let {setNextRow} = this.props.KActions;
         this.cellTimer = setInterval(() => {
-            setNextRow(this.activeRow, ++this.activeCell);
-        }, 1000);
+            ++this.activeCell;
+            if(this.letters[this.activeRow][this.activeCell] === ' ')
+            {
+                this.activeCell = 0;
+            }
+            setNextRow(this.activeRow, this.activeCell);
+        }, this.interval);
+    }
+
+    resetTimers(){
+        clearInterval(this.cellTimer);
+        clearInterval(this.rowTimer);
+        this.cellTimer = 0;
+        this.rowTimer = 0;
     }
 
     componentDidMount(){
@@ -70,9 +82,16 @@ export default class Keyboard extends Component {
         {
             //находим выбранную букву и продолжаем
             let {addLetter} = this.props.KActions;
-            let lat = this.letters[this.activeRow][this.activeCell];
-            addLetter(lat);
-            this.activeRow--;
+            let lett = this.letters[this.activeRow][this.activeCell];
+            if(lett !== '^')
+            {
+                addLetter(lett);
+                this.activeRow--;
+            }
+            else
+            {
+                this.activeRow = 0;
+            }
             this.startRowCircle();
         }
     }
@@ -101,7 +120,8 @@ function mapStateToProps(state) {
     return {
         row: state.Keyboard.row,
         cell: state.Keyboard.cell,
-        phrase: state.Keyboard.phrase
+        phrase: state.Keyboard.phrase,
+        predict: state.Keyboard.predict
     }
 }
 

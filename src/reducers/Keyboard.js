@@ -6,7 +6,8 @@ import {
 const initialState = {
     row: 0,
     cell: -1,
-    phrase: ''
+    phrase: '',
+    predict: []
 };
 
 export default function Keyboard(state = initialState, action) {
