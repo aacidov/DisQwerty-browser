@@ -3,18 +3,22 @@ import {
     ADD_LETTER,
     REMOVE_LAST_LETTER,
     REMOVE_LAST_WORD,
-    REMOVE_ALL
+    REMOVE_ALL,
+    SET_LETTERS
 } from '../constants/Keyboard'
 
 const initialState = {
     row: 0,
     cell: -1,
     phrase: '',
-    predict: []
+    predict: [],
+    letters: []
 };
 
 export default function Keyboard(state = initialState, action) {
-    switch (action.type) {
+    switch (acton.type) {
+        case SET_LETTERS:
+            return { ...state, letters: action.payload};
         case SET_NEXT_VALUE:
             return { ...state, row: action.payload.r, cell: action.payload.c};
         case ADD_LETTER:

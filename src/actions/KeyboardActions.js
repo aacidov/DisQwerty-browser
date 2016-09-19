@@ -3,7 +3,8 @@ import {
     ADD_LETTER,
     REMOVE_LAST_LETTER,
     REMOVE_ALL,
-    REMOVE_LAST_WORD
+    REMOVE_LAST_WORD,
+    SET_LETTERS
 } from '../constants/Keyboard'
 
 export function setNextRow(r, c) {
@@ -47,6 +48,15 @@ export function removeLastWord() {
         dispatch({
             type: REMOVE_LAST_WORD,
             payload: null
+        });
+    }
+}
+
+export function setLetters(letters) {
+    return (dispatch) => {
+        dispatch({
+            type: SET_LETTERS,
+            payload: letters
         });
     }
 }

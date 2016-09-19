@@ -17,14 +17,16 @@ export default class Keyboard extends Component {
         this.activeRow = 0;
         this.activeCell = -1;
 
-        let lang = props.params.lang || 'ru';
-        let {lang:{letters}} = require('../../../language/' + lang);
-
-        letters = letters.map((l) => '↑' + l);
-
-        this.lang = lang;
-        this.letters = letters;
+        this.lang = props.params.lang || 'ru';
         this.interval = 1000;
+        this.cellCount = letters[0].length;
+    }
+
+    setLetters(){
+        let {lang:{letters}} = require('../../../language/' + this.lang);
+        letters = letters.map((l) => '↑' + l);
+        let {setLetters} = this.props.KActions;
+        setLetters(letters);
     }
 
     resetCell(){
@@ -73,7 +75,6 @@ export default class Keyboard extends Component {
     }
 
     switchOrSelect(){
-        console.log(this.rowTimer, this.cellTimer);
         if(this.rowTimer)
         {
             this.startCellCircle();
