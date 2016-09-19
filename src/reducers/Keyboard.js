@@ -16,7 +16,7 @@ const initialState = {
 };
 
 export default function Keyboard(state = initialState, action) {
-    switch (acton.type) {
+    switch (action.type) {
         case SET_LETTERS:
             return { ...state, letters: action.payload};
         case SET_NEXT_VALUE:

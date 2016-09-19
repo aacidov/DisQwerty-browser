@@ -19,14 +19,16 @@ export default class Keyboard extends Component {
 
         this.lang = props.params.lang || 'ru';
         this.interval = 1000;
-        this.cellCount = letters[0].length;
     }
 
     setLetters(){
         let {lang:{letters}} = require('../../../language/' + this.lang);
-        letters = letters.map((l) => '↑' + l);
+        this.letters = letters.map((l) => '↑' + l);
         let {setLetters} = this.props.KActions;
-        setLetters(letters);
+        setLetters(this.letters);
+        this.cellCount = this.letters[0].length;
+
+
     }
 
     resetCell(){
@@ -71,6 +73,7 @@ export default class Keyboard extends Component {
     }
 
     componentDidMount(){
+        this.setLetters();
         this.startRowCircle();
     }
 
@@ -126,7 +129,7 @@ export default class Keyboard extends Component {
                     <KRow
                         resetC={::this.resetCell}
                         resetR={::this.resetRow}
-                        rows={this.letters}
+                        rows={this.props.letters}
                         activeRow={this.props.row}
                         activeCell={this.props.cell}
                     />
@@ -141,7 +144,8 @@ function mapStateToProps(state) {
         row: state.Keyboard.row,
         cell: state.Keyboard.cell,
         phrase: state.Keyboard.phrase,
-        predict: state.Keyboard.predict
+        predict: state.Keyboard.predict,
+        letters: state.Keyboard.letters
     }
 }
 
