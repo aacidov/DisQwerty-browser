@@ -20,7 +20,7 @@ export default class Keyboard extends Component {
         let lang = props.params.lang || 'ru';
         let {lang:{letters}} = require('../../../language/' + lang);
 
-        letters = letters.map((l) => '^' + l);
+        letters = letters.map((l) => '↑' + l);
 
         this.lang = lang;
         this.letters = letters;
@@ -81,17 +81,36 @@ export default class Keyboard extends Component {
         else if(this.cellTimer)
         {
             //находим выбранную букву и продолжаем
-            let {addLetter} = this.props.KActions;
+            let {
+                addLetter,
+                removeLastLetter,
+                removeAll,
+                removeLastWord
+            } = this.props.KActions;
             let lett = this.letters[this.activeRow][this.activeCell];
-            if(lett !== '^')
+            switch (lett)
             {
-                addLetter(lett);
-                this.activeRow--;
+                case '↑':
+                    this.activeRow = 0;
+                    break;
+                case '⇽':
+                    removeLastLetter();
+                    break;
+                case '✖':
+                    removeAll();
+                    break;
+                case '⤆':
+                    removeLastWord();
+                    break;
+                case '↔':
+                    addLetter(' ');
+                    this.activeRow--;
+                    break;
+                default:
+                    addLetter(lett);
+                    this.activeRow--;
             }
-            else
-            {
-                this.activeRow = 0;
-            }
+
             this.startRowCircle();
         }
     }

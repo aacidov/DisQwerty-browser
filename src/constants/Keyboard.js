@@ -1,2 +1,5 @@
 export const ADD_LETTER = 'ADD_LETTER';
+export const REMOVE_LAST_LETTER = 'REMOVE_LAST_LETTER';
+export const REMOVE_LAST_WORD = 'REMOVE_LAST_WORD';
+export const REMOVE_ALL = 'REMOVE_ALL';
 export const SET_NEXT_VALUE = 'SET_NEXT_VALUE';
