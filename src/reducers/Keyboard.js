@@ -4,7 +4,8 @@ import {
     REMOVE_LAST_LETTER,
     REMOVE_LAST_WORD,
     REMOVE_ALL,
-    SET_LETTERS
+    SET_LETTERS,
+    PREDICT_SHOW
 } from '../constants/Keyboard'
 
 const initialState = {
@@ -32,6 +33,8 @@ export default function Keyboard(state = initialState, action) {
             return { ...state, phrase: words.join(' ') + ' '};
         case REMOVE_ALL:
             return { ...state, phrase: ''};
+        case PREDICT_SHOW:
+            return { ...state, predict: action.payload};
         default:
             return state;
     }

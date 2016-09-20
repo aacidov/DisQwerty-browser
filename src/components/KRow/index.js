@@ -27,9 +27,15 @@ export default class KRow extends Component {
             <tbody>
             {rows.map((set, i) =>
                 <tr className={activeRow === i && activeCell === -1 ? 'selected' : null} key={i}>
-                    {set.split('').map((l, j) =>
+                    { typeof set === 'string' ?
+                        set.split('').map((l, j) =>
                         <td className={activeCell === j && activeRow === i ? 'selected' : null} key={j}>{l}</td>)
+                        :
+                        set.map((l, j) =>
+                            <td colSpan='5' className={activeCell === j && activeRow === i ? 'selected' : null} key={j}>{l}</td>)
                     }
+
+
                 </tr>
             )}
             </tbody>

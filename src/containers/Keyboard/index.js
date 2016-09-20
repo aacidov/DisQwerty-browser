@@ -19,6 +19,7 @@ export default class Keyboard extends Component {
 
         this.lang = props.params.lang || 'ru';
         this.interval = 1000;
+        this.firstRow = 0;
     }
 
     setLetters(){
@@ -36,7 +37,7 @@ export default class Keyboard extends Component {
     }
 
     resetRow(){
-        this.activeRow = 0;
+        this.activeRow = this.firstRow;
     }
 
     startRowCircle(){
@@ -72,9 +73,22 @@ export default class Keyboard extends Component {
         this.rowTimer = 0;
     }
 
+    spaceEvent(e){
+        if(e.which == 32)
+        {
+            this.switchOrSelect();
+        }
+    }
+
     componentDidMount(){
         this.setLetters();
         this.startRowCircle();
+        window.addEventListener('keydown', ::this.spaceEvent);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('keydown', ::this.spaceEvent);
+        this.resetTimers();
     }
 
     switchOrSelect(){
@@ -89,13 +103,14 @@ export default class Keyboard extends Component {
                 addLetter,
                 removeLastLetter,
                 removeAll,
-                removeLastWord
+                removeLastWord,
+                predict
             } = this.props.KActions;
             let lett = this.letters[this.activeRow][this.activeCell];
             switch (lett)
             {
                 case '↑':
-                    this.activeRow = 0;
+                    this.activeRow = this.firstRow;
                     break;
                 case '⇽':
                     removeLastLetter();
@@ -116,10 +131,25 @@ export default class Keyboard extends Component {
             }
 
             this.startRowCircle();
+            predict(this.lang);
         }
     }
 
     render() {
+        let letters = this.props.letters;
+        //@todo как-то не очень хорошо, возможно, стоит переделать массив букв в объект
+        if(this.props.predict.length)
+        {
+            if(typeof  letters[0] === 'string')
+            {
+                letters.unshift(this.props.predict);
+            }
+            else
+            {
+                letters[0] = this.props.predict;
+            }
+        }
+
         return (
             <div>
                 <div className='font output'>
@@ -127,9 +157,10 @@ export default class Keyboard extends Component {
                 </div>
                 <table onClick={::this.switchOrSelect}>
                     <KRow
+                        predict={this.props.predict.length > 0}
                         resetC={::this.resetCell}
                         resetR={::this.resetRow}
-                        rows={this.props.letters}
+                        rows={letters}
                         activeRow={this.props.row}
                         activeCell={this.props.cell}
                     />

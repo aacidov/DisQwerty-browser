@@ -4,8 +4,13 @@ import {
     REMOVE_LAST_LETTER,
     REMOVE_ALL,
     REMOVE_LAST_WORD,
-    SET_LETTERS
+    SET_LETTERS,
+    PREDICT_LOAD,
+    PREDICT_SHOW,
+    PREDICT_KEY
 } from '../constants/Keyboard'
+
+import axios from 'axios'
 
 export function setNextRow(r, c) {
     return (dispatch) => {
@@ -58,5 +63,29 @@ export function setLetters(letters) {
             type: SET_LETTERS,
             payload: letters
         });
+    }
+}
+
+export function predict(lang) {
+    return (dispatch, getState) => {
+        let {phrase} = getState().Keyboard ;
+
+        if(phrase.trim() !== '')
+        {
+            dispatch({
+                type: PREDICT_LOAD,
+                payload: true
+            });
+
+            axios
+                .get('https://predictor.yandex.net/api/v1/predict.json/complete?key=' + PREDICT_KEY + '&q=' + phrase + '&lang=' + lang + '&limit=3')
+                .then(data => {
+                    dispatch({
+                        type: PREDICT_SHOW,
+                        payload: data.data.text
+                    });
+                })
+            ;
+        }
     }
 }
