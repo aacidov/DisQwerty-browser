@@ -66,10 +66,26 @@ export function setLetters(letters) {
     }
 }
 
+export function addPredict(word) {
+    return (dispatch) => {
+        dispatch({
+            type: REMOVE_LAST_WORD,
+            payload: null
+        });
+
+        dispatch({
+            type: ADD_LETTER,
+            payload: ' ' + word + ' '
+        });
+    }
+}
+
 export function predict(lang) {
     return (dispatch, getState) => {
-        let {phrase} = getState().Keyboard ;
+        let {phrase} = getState().Keyboard;
 
+        phrase = phrase.split(' ').filter(w => w !== '' && w !== ' ');
+        phrase = phrase.pop();
         if(phrase.trim() !== '')
         {
             dispatch({
@@ -84,7 +100,7 @@ export function predict(lang) {
                         type: PREDICT_SHOW,
                         payload: data.data.text
                     });
-                })
+                }).catch(error => console.error(error))
             ;
         }
     }

@@ -104,7 +104,8 @@ export default class Keyboard extends Component {
                 removeLastLetter,
                 removeAll,
                 removeLastWord,
-                predict
+                predict,
+                addPredict
             } = this.props.KActions;
             let lett = this.letters[this.activeRow][this.activeCell];
             switch (lett)
@@ -126,7 +127,14 @@ export default class Keyboard extends Component {
                     this.activeRow--;
                     break;
                 default:
-                    addLetter(lett);
+                    if(lett.length === 1)
+                    {
+                        addLetter(lett);
+                    }
+                    else
+                    {
+                        addPredict(lett);
+                    }
                     this.activeRow--;
             }
 
