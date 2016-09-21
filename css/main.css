@@ -10,13 +10,14 @@ td{
     text-align: center;
     border: 1px solid black;
     min-width: 97px;
-
 }
 
 .output{
     padding: 2px;
     border: 1px solid black;
     min-height: 69px;
+    border-radius: 10px;
+    display: inline-block;
 }
 .font{
     font-size: 60px;
@@ -36,4 +37,9 @@ td{
     width: 150px;
     height: 150px;
     border: 1px solid black;
+}
+
+.cursor{
+    height: 60px;
+    display: inline-block;
 }

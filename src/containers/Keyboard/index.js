@@ -3,6 +3,7 @@ import KRow from '../../components/KRow'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as KActions from '../../actions/KeyboardActions'
+import Cursor from '../../components/Cursor'
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Keyboard extends Component {
@@ -27,9 +28,6 @@ export default class Keyboard extends Component {
         this.letters = letters.map((l) => '↑' + l);
         let {setLetters} = this.props.KActions;
         setLetters(this.letters);
-        this.cellCount = this.letters[0].length;
-
-
     }
 
     resetCell(){
@@ -161,7 +159,7 @@ export default class Keyboard extends Component {
         return (
             <div>
                 <div className='font output'>
-                    <span id='output'>{this.props.phrase}</span><span id='cursor'></span>
+                    <span id='output'>{this.props.phrase}</span><Cursor/>
                 </div>
                 <table onClick={::this.switchOrSelect}>
                     <KRow
