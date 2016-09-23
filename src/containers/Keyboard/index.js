@@ -26,9 +26,8 @@ export default class Keyboard extends Component {
 
     setLetters(){
         let {lang:{letters}} = require('../../../language/' + this.lang);
-        this.letters = letters.map((l) => '↑' + l);
         let {setLetters} = this.props.KActions;
-        setLetters(this.letters);
+        setLetters(letters.map((l) => '↑' + l));
     }
 
     resetCell(){
@@ -64,7 +63,8 @@ export default class Keyboard extends Component {
         let {setNextRow} = this.props.KActions;
         this.cellTimer = setInterval(() => {
             ++this.activeCell;
-            if(this.letters && this.letters[this.activeRow] && this.letters[this.activeRow][this.activeCell] === ' ')
+            if(this.props.letters && this.props.letters[this.props.row]
+                && this.props.letters[this.props.row][this.props.cell] === ' ')
             {
                 this.activeCell = 0;
             }
@@ -113,7 +113,7 @@ export default class Keyboard extends Component {
                 predict,
                 addPredict
             } = this.props.KActions;
-            let lett = this.letters[this.activeRow][this.activeCell];
+            let lett = this.props.letters[this.props.row][this.props.cell];
             switch (lett)
             {
                 case '↑':
@@ -142,7 +142,6 @@ export default class Keyboard extends Component {
                         addPredict(lett, this.props.predict.pos);
                     }
                     this.activeRow--;
-
                     this.scrollOutput();
             }
 
@@ -160,24 +159,11 @@ export default class Keyboard extends Component {
 
     render() {
         let letters = this.props.letters;
-        //@todo как-то не очень хорошо, возможно, стоит переделать массив букв в объект
-        if(this.props.predict.text.length)
-        {
-            if(typeof  letters[0] === 'string')
-            {
-                letters.unshift(this.props.predict.text);
-            }
-            else
-            {
-                letters[0] = this.props.predict.text;
-            }
-        }
-
         return (
             <div>
                 <div className='row'>
-                    <div className='font output col-lg-offset-1 col-lg-10'>
-                        <span ref={(e)=>{this.output = e}} id='output'>{this.props.phrase}</span><Cursor/>
+                    <div ref={(e)=>{this.output = e}} className='font output col-lg-offset-1 col-lg-12'>
+                        <span id='output'>{this.props.phrase}</span><Cursor/>
                     </div>
                 </div>
                 <div className='row'>

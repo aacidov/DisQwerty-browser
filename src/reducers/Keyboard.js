@@ -39,7 +39,21 @@ export default function Keyboard(state = initialState, action) {
         case REMOVE_ALL:
             return { ...state, phrase: ''};
         case PREDICT_SHOW:
-            return { ...state, predict: action.payload};
+            let predict = action.payload;
+            let letters = [...state.letters];
+            //@todo как-то не очень хорошо, возможно, стоит переделать массив букв в объект
+            if(predict.text.length)
+            {
+                if(typeof  letters[0] === 'string')
+                {
+                    letters.unshift(predict.text);
+                }
+                else
+                {
+                    letters[0] = predict.text;
+                }
+            }
+            return { ...state, predict: action.payload, letters: letters};
         case CHANGE_SPEED:
             return { ...state, speed: action.payload};
         default:

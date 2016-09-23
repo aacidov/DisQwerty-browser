@@ -11,10 +11,16 @@ export default class KRow extends Component {
             resetR
         } = this.props;
 
-        if(activeRow === rows.length)
+        if(activeRow === rows.length || (typeof rows[activeRow] === 'undefined'))
         {
             resetR();
             activeRow = 0;
+        }
+
+        if(activeCell !== -1 && typeof rows[activeRow][activeCell] === 'undefined')
+        {
+            resetC();
+            activeCell = 0;
         }
 
         if(activeCell !== -1 && activeCell === rows[activeRow].length)
