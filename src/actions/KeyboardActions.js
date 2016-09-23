@@ -7,7 +7,8 @@ import {
     SET_LETTERS,
     PREDICT_LOAD,
     PREDICT_SHOW,
-    PREDICT_KEY
+    PREDICT_KEY,
+    CHANGE_SPEED
 } from '../constants/Keyboard'
 
 import axios from 'axios'
@@ -66,16 +67,27 @@ export function setLetters(letters) {
     }
 }
 
-export function addPredict(word) {
+export function addPredict(word, pos) {
     return (dispatch) => {
-        dispatch({
-            type: REMOVE_LAST_WORD,
-            payload: null
-        });
+
+        if(pos < 0)
+        {
+            dispatch({
+                type: REMOVE_LAST_WORD,
+                payload: null
+            });
+        }
+        else
+        {
+            dispatch({
+                type: ADD_LETTER,
+                payload: ' '
+            });
+        }
 
         dispatch({
             type: ADD_LETTER,
-            payload: ' ' + word + ' '
+            payload: word + ' '
         });
     }
 }
@@ -86,7 +98,7 @@ export function predict(lang) {
 
         phrase = phrase.split(' ').filter(w => w !== '' && w !== ' ');
         phrase = phrase.pop();
-        if(phrase.trim() !== '')
+        if(phrase && phrase.trim() !== '')
         {
             dispatch({
                 type: PREDICT_LOAD,
@@ -98,10 +110,21 @@ export function predict(lang) {
                 .then(data => {
                     dispatch({
                         type: PREDICT_SHOW,
-                        payload: data.data.text
+                        payload: data.data
                     });
                 }).catch(error => console.error(error))
             ;
         }
+    }
+}
+
+export function changeSpeed(s, clb) {
+    return (dispatch) => {
+        dispatch({
+            type: CHANGE_SPEED,
+            payload: s
+        });
+
+        clb();
     }
 }

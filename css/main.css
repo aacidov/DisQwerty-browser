@@ -18,6 +18,9 @@ td{
     min-height: 69px;
     border-radius: 10px;
     display: inline-block;
+    margin: 10px;
+    max-height: 180px;
+    overflow: auto;
 }
 .font{
     font-size: 60px;
@@ -30,16 +33,24 @@ td{
     background: #000;
     color: #fff;
 }
-.settings{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 150px;
-    height: 150px;
-    border: 1px solid black;
-}
-
 .cursor{
     height: 60px;
     display: inline-block;
+}
+.cursor.black{
+    color: black;
+}
+.cursor.white{
+    color: white;
+}
+
+.normal-font{
+    font-size: 20px;
+}
+.border{
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid black;
+    background-color: aliceblue;
+    border-radius: 10px;
 }

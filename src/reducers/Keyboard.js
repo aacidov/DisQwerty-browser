@@ -5,15 +5,20 @@ import {
     REMOVE_LAST_WORD,
     REMOVE_ALL,
     SET_LETTERS,
-    PREDICT_SHOW
+    PREDICT_SHOW,
+    CHANGE_SPEED
 } from '../constants/Keyboard'
 
 const initialState = {
     row: 0,
     cell: -1,
     phrase: '',
-    predict: [],
-    letters: []
+    predict: {
+        text: [],
+        pos: null
+    },
+    letters: [],
+    speed: 1000
 };
 
 export default function Keyboard(state = initialState, action) {
@@ -35,6 +40,8 @@ export default function Keyboard(state = initialState, action) {
             return { ...state, phrase: ''};
         case PREDICT_SHOW:
             return { ...state, predict: action.payload};
+        case CHANGE_SPEED:
+            return { ...state, speed: action.payload};
         default:
             return state;
     }

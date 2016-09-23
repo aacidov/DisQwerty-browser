@@ -6,5 +6,6 @@ export const SET_NEXT_VALUE = 'SET_NEXT_VALUE';
 export const SET_LETTERS = 'SET_LETTERS';
 export const PREDICT_LOAD = 'PREDICT_LOAD';
 export const PREDICT_SHOW = 'PREDICT_SHOW';
+export const CHANGE_SPEED = 'CHANGE_SPEED';
 
 export const PREDICT_KEY = 'pdct.1.1.20160717T095459Z.24459ab1ddfe3b1c.0924f3557e8356f8d8e17eb5997f514b7ae105c3';

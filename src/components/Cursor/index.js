@@ -20,6 +20,6 @@ export default class Cursor extends Component {
     }
 
     render() {
-        return (<span className='cursor'>{this.state.visible ? '|' : ''}</span>)
+        return (<span className={this.state.visible ? 'cursor black' : 'cursor white'}>|</span>)
     }
 }

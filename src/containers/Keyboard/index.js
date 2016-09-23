@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as KActions from '../../actions/KeyboardActions'
 import Cursor from '../../components/Cursor'
+import Settings from '../../components/Settings'
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Keyboard extends Component {
@@ -19,8 +20,8 @@ export default class Keyboard extends Component {
         this.activeCell = -1;
 
         this.lang = props.params.lang || 'ru';
-        this.interval = 1000;
         this.firstRow = 0;
+        this.output = null;
     }
 
     setLetters(){
@@ -38,17 +39,24 @@ export default class Keyboard extends Component {
         this.activeRow = this.firstRow;
     }
 
-    startRowCircle(){
+    changeSpeed(e){
+        let {changeSpeed} = this.props.KActions;
+        changeSpeed(parseInt(e.target.value), () => {
+            this.startRowCircle(e.target.value);
+        });
+    }
+
+    startRowCircle(speed = this.props.speed){
         let {setNextRow} = this.props.KActions;
         if(this.cellTimer)
         {
-            this.resetTimers();
             this.activeCell = -1;
         }
+        this.resetTimers();
 
         this.rowTimer = setInterval(() => {
             setNextRow(++this.activeRow, this.activeCell);
-        }, this.interval);
+        }, speed);
     }
 
     startCellCircle(){
@@ -56,12 +64,12 @@ export default class Keyboard extends Component {
         let {setNextRow} = this.props.KActions;
         this.cellTimer = setInterval(() => {
             ++this.activeCell;
-            if(this.letters[this.activeRow][this.activeCell] === ' ')
+            if(this.letters && this.letters[this.activeRow] && this.letters[this.activeRow][this.activeCell] === ' ')
             {
                 this.activeCell = 0;
             }
             setNextRow(this.activeRow, this.activeCell);
-        }, this.interval);
+        }, this.props.speed);
     }
 
     resetTimers(){
@@ -131,9 +139,11 @@ export default class Keyboard extends Component {
                     }
                     else
                     {
-                        addPredict(lett);
+                        addPredict(lett, this.props.predict.pos);
                     }
                     this.activeRow--;
+
+                    this.scrollOutput();
             }
 
             this.startRowCircle();
@@ -141,36 +151,51 @@ export default class Keyboard extends Component {
         }
     }
 
+    scrollOutput(){
+        if(this.output)
+        {
+            this.output.scrollTop = this.output.scrollHeight;
+        }
+    }
+
     render() {
         let letters = this.props.letters;
         //@todo как-то не очень хорошо, возможно, стоит переделать массив букв в объект
-        if(this.props.predict.length)
+        if(this.props.predict.text.length)
         {
             if(typeof  letters[0] === 'string')
             {
-                letters.unshift(this.props.predict);
+                letters.unshift(this.props.predict.text);
             }
             else
             {
-                letters[0] = this.props.predict;
+                letters[0] = this.props.predict.text;
             }
         }
 
         return (
             <div>
-                <div className='font output'>
-                    <span id='output'>{this.props.phrase}</span><Cursor/>
+                <div className='row'>
+                    <div className='font output col-lg-offset-1 col-lg-10'>
+                        <span ref={(e)=>{this.output = e}} id='output'>{this.props.phrase}</span><Cursor/>
+                    </div>
                 </div>
-                <table onClick={::this.switchOrSelect}>
-                    <KRow
-                        predict={this.props.predict.length > 0}
-                        resetC={::this.resetCell}
-                        resetR={::this.resetRow}
-                        rows={letters}
-                        activeRow={this.props.row}
-                        activeCell={this.props.cell}
-                    />
-                </table>
+                <div className='row'>
+                    <div className='col-lg-10'>
+                        <table onClick={::this.switchOrSelect}>
+                            <KRow
+                                predict={this.props.predict.text.length > 0}
+                                resetC={::this.resetCell}
+                                resetR={::this.resetRow}
+                                rows={letters}
+                                activeRow={this.props.row}
+                                activeCell={this.props.cell}
+                            />
+                        </table>
+                    </div>
+                    <Settings changeSpeed={::this.changeSpeed} value={this.props.speed}/>
+                </div>
+
             </div>
         )
     }
@@ -182,7 +207,8 @@ function mapStateToProps(state) {
         cell: state.Keyboard.cell,
         phrase: state.Keyboard.phrase,
         predict: state.Keyboard.predict,
-        letters: state.Keyboard.letters
+        letters: state.Keyboard.letters,
+        speed: state.Keyboard.speed
     }
 }
 
