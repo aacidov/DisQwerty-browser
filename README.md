@@ -1,4 +1,5 @@
 # DisQwerty-browser
+React version
 
 ## Clone
 
@@ -6,18 +7,12 @@
 git clone git@github.com:aacidov/DisQwerty-browser.git
 cd DisQwerty-browser
 npm i
+npm build
 ```
 
 ## Demo
 
 Prodution [here](http://aacidov.ru/DisQwerty)
-
-## gulp tasks
-
-* ``bash gulp webserver`` - run webserver by current dir
-* ``bash gulp browserify`` -  build js files
-* ``bash gulp watch`` -  watch for build js files
-* ``bash gulp default`` - browserify, watch, webserver
 
 ---
 More information:
