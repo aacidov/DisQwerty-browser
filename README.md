@@ -1,23 +1,26 @@
 # DisQwerty-browser
+React version
 
 ## Clone
 
 ```bash
 git clone git@github.com:aacidov/DisQwerty-browser.git
 cd DisQwerty-browser
-npm i
 ```
+
+If you wont rebuild app run command
+```bash
+npm i && npm run build
+```
+else simply open index.html in your browser.
+
+##Languages
+All languages located in "language" folder. You can add some language following the structure (see language/ru.js).
+In browser simply open file://path/to/index.html#/you_lang (if page not changed press F5 button)
 
 ## Demo
 
 Prodution [here](http://aacidov.ru/DisQwerty)
-
-## gulp tasks
-
-* ``bash gulp webserver`` - run webserver by current dir
-* ``bash gulp browserify`` -  build js files
-* ``bash gulp watch`` -  watch for build js files
-* ``bash gulp default`` - browserify, watch, webserver
 
 ---
 More information:
